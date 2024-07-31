@@ -1,65 +1,58 @@
-// ? forEach, map, filter, find, indexof
-let arr = [1, 2, 3, 4];
-arr.forEach(function (val) {
-	console.log(val + " hello");
+const { error } = require("console");
+const fs = require("fs");
+const http = require("http");
+
+const server = http.createServer(function (req, res) {
+	res.end("Hello World!");
+});
+server.listen(8080);
+
+fs.writeFile('hey.txt','hey, hello kaise ho',(err)=>{
+	if(err){
+		console.error(err);
+	}else{
+		console.log("done");
+	}
+})
+
+fs.appendFile("hey.txt", "\nMai toh aacha hu", (err) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log("done");
+  }
 });
 
-let new_arr_1 = arr.map(function (val) {
-	return val * 3;
+fs.rename("hey.txt","hello.txt",(err)=>{
+	if(err){
+		console.error(err);
+	}else{
+		console.log("done");
+	}
+})
+
+fs.copyFile("hello.txt", "./copy/chacha.txt", (err) => {
+  if (err) {
+    console.error(err.message);
+  } else {
+    console.log("done");
+  }
 });
 
-console.log(new_arr_1);
+fs.unlink("hello.txt", (err) => {
+  if (err) {
+    console.error(err.message);
+  } else {
+    console.log("done");
+  }
+});
 
-let new_arr_2 = arr.filter(function (val) {
-	if (val >= 3) {
-		return true;
-	} else {
-		return false;
+fs.rm("./copy", { recursive: true }, (err) => {
+	{
+		if (err) {
+			console.error(err.message);
+		} else {
+			console.log("done");
+		}
 	}
 });
-console.log(new_arr_2);
-
-let new_arr_3 = arr.find(function (val) {
-	if (val == 2) {
-		return val;
-	}
-});
-
-console.log(new_arr_3);
-
-// ? Objects
-let obj = {
-	name: "John",
-	age: 30,
-	isMarried: false,
-};
-Object.freeze(obj);
-console.log(obj["name"]);
-console.log(obj.name);
-console.log(obj["age"]);
-console.log(obj.age);
-
-obj.age = 25; // ? Won't work because we freezed the object in line 36
-
-console.log(obj["age"]);
-console.log(obj.age);
-
-// ? Functions
-
-function abcd() {
-	return "hello world";
-}
-
-let result = abcd();
-console.log(result);
-console.log(abcd.length); // ? It gives the number of parameters of the function
-
-// ? async js coding
-async function fetchApi() {
-	let blob = await fetch(`https://randomuser.me/api/`);
-	let res = await blob.json();
-
-	console.log(res.results[0].gender);
-}
-
-fetchApi();
